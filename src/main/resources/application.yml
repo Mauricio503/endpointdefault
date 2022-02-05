@@ -1,0 +1,31 @@
+#spring.jpa.database=POSTGRESQL
+#spring.datasource.platform=postgres
+#spring.jpa.show-sql=true
+#spring.jpa.hibernate.ddl-auto=create-drop
+#spring.database.driverClassName=org.postgresql.Driver
+#spring.datasource.url=jdbc:postgresql://localhost:5432/priview
+#spring.datasource.username=postgres
+#spring.datasource.password=postgres
+#server.port=8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/endpointdefault
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa: 
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    show-sql: true
+    open-in-view: true
+#    hibernate.ddl-auto: update
+    hibernate.ddl-auto: create-drop
+    properties: 
+      hibernate.format_sql: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+  main.lazy-initialization: true
+server.port: 8080
+
+springdoc.swagger-ui.path: /swagger-ui
+springdoc.swagger-ui.disable-swagger-default-url: true
