@@ -2,6 +2,6 @@ package tech.criasystem.repository;
 
 import tech.criasystem.model.Usuario;
 
-public interface UserRepository extends BaseRepository<Usuario, Long> {
+public interface UsuarioRepository extends BaseRepository<Usuario, Long> {
 
 }

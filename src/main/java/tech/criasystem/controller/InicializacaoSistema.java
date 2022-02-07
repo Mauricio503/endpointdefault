@@ -14,7 +14,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class InicializacaoSistema extends SpringBootServletInitializer {
 	
 	public static void contextInitialized() {
-		System.out.println("Inicializando Sistema");
 		criarChavePrivadaAutenticacao();
 	}
 	
