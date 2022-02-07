@@ -12,25 +12,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import tech.criasystem.authentication.JwtTokenUtil;
+import tech.criasystem.authentication.UsuarioService;
 import tech.criasystem.dto.res.UsuariotResDTO;
 import tech.criasystem.model.Usuario;
-import tech.criasystem.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
 	
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioService usuarioService;
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
     public ResponseEntity<UsuariotResDTO> post(@Valid @RequestBody Usuario usuario){
 		try{
-			if(usuario.getUsuario().equals("teste@treinaweb.com.br") 
-						&& 
-				usuario.getSenha().equals("1234")){
-				
+			if(usuarioService.autenticacao(usuario)){
 				String jwtToken = new JwtTokenUtil().generateToken(usuario);
                 return new ResponseEntity<UsuariotResDTO>(new UsuariotResDTO(new Usuario("","",jwtToken)),HttpStatus.OK);
 	            }
