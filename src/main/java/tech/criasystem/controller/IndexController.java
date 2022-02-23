@@ -14,9 +14,9 @@ public class IndexController {
 	@Autowired
 	private LoadTestDataService loadTestDataService;
 
-	@GetMapping
+	@GetMapping("/index")
 	public String index() {
-		return "Hello World!";
+		return "Deu Certo";
 	}
 
 	@PostMapping("/api/private/load-test-data")
