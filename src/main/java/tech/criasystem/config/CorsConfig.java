@@ -1,8 +1,12 @@
 package tech.criasystem.config;
 
+import java.util.Collections;
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.Ordered;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -12,20 +16,16 @@ public class CorsConfig {
 
 	@Bean
 	@Primary
-	public CorsFilter corsFilter() {
-		final UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-		final CorsConfiguration corsConfig = new CorsConfiguration();
-		corsConfig.setAllowCredentials(true);
-		corsConfig.addAllowedOrigin("*");
-		corsConfig.addAllowedHeader("*");
-		corsConfig.addAllowedMethod("OPTIONS");
-		corsConfig.addAllowedMethod("HEAD");
-		corsConfig.addAllowedMethod("GET");
-		corsConfig.addAllowedMethod("PUT");
-		corsConfig.addAllowedMethod("POST");
-		corsConfig.addAllowedMethod("DELETE");
-		corsConfig.addAllowedMethod("PATCH");
-		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfig);
-		return new CorsFilter(urlBasedCorsConfigurationSource);
+	public FilterRegistrationBean<CorsFilter> corsFilter() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    CorsConfiguration config = new CorsConfiguration();
+	    config.setAllowCredentials(false);
+	    config.setAllowedOrigins(Collections.singletonList("*"));
+	    config.setAllowedMethods(Collections.singletonList("*"));
+	    config.setAllowedHeaders(Collections.singletonList("*"));
+	    source.registerCorsConfiguration("/**", config);
+	    FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
+	    bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+	    return bean;
 	}
 }

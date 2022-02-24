@@ -26,7 +26,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
-import tech.criasystem.model.Usuario;
+import tech.criasystem.model.UserLogin;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -76,14 +76,14 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	//generate token for user
-	public String generateToken(Usuario usuario) {
+	public String generateToken(UserLogin user) {
 		try {
 			Map<String, Object> claims = new HashMap<>();
-			claims.put("userId", usuario.getId());
-			claims.put("userName", usuario.getUsuario());
+			claims.put("userId", user.getId());
+			claims.put("userName", user.getUsername());
 			String jwtToken = Jwts.builder()
 	            	.setClaims(claims)
-	                .setSubject(usuario.getUsuario())
+	                .setSubject(user.getUsername())
 	                .setIssuer("localhost:8080")
 	                .setIssuedAt(new Date())
 	                .setExpiration(

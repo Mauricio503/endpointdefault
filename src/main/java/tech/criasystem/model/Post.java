@@ -40,7 +40,7 @@ public class Post implements Serializable {
 	@Column(length = 500)
 	private String body;
 	@ManyToOne
-	private Usuario user;
+	private UserLogin user;
 
 	public Post() {
 	}
@@ -57,7 +57,7 @@ public class Post implements Serializable {
 	}
 	
 	public Post(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, @NotBlank String title,
-			@NotBlank String body, Usuario user) {
+			@NotBlank String body, UserLogin user) {
 		super();
 		this.id = id;
 		this.createdAt = createdAt;
@@ -116,11 +116,11 @@ public class Post implements Serializable {
 		this.body = body;
 	}
 
-	public Usuario getUser() {
+	public UserLogin getUser() {
 		return user;
 	}
 
-	public void setUser(Usuario user) {
+	public void setUser(UserLogin user) {
 		this.user = user;
 	}
 }

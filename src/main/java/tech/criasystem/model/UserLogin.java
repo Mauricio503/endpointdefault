@@ -12,33 +12,33 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Usuario {
+public class UserLogin {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String usuario;
-	private String senha;
+	private String username;
+	private String password;
 	@Transient
 	private String token;
 	
-	public Usuario() {
+	public UserLogin() {
 		super();
 	}
 	
-	public Usuario(Long id, String name, String usuario, String senha) {
+	public UserLogin(Long id, String name, String username, String password) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.usuario = usuario;
-		this.senha = senha;
+		this.username = username;
+		this.password = password;
 	}
 	
-	public Usuario(String name, String usuario, String token) {
+	public UserLogin(String name, String username, String token) {
 		super();
 		this.name = name;
-		this.usuario = usuario;
+		this.username = username;
 		this.token = token;
 	}
 
@@ -58,20 +58,20 @@ public class Usuario {
 		this.name = name;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getToken() {

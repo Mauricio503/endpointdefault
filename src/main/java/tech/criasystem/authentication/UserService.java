@@ -8,19 +8,33 @@ import java.security.NoSuchAlgorithmException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tech.criasystem.model.Usuario;
-import tech.criasystem.repository.UsuarioRepository;
+import tech.criasystem.model.UserLogin;
+import tech.criasystem.repository.UserRepository;
 
 @Service
-public class UsuarioService {
+public class UserService {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UserRepository userRepository;
 	
-	public Boolean autenticacao(Usuario usuario) throws NoSuchAlgorithmException {
-		Usuario usuarioBD = usuarioRepository.findByUsuario(usuario.getUsuario());
-		if(usuarioBD != null) {
-			if(usuarioBD.getSenha().equals(encryptPassword(usuario.getSenha()))) {
+	public void save(UserLogin user) throws NoSuchAlgorithmException {
+		user.setPassword(encryptPassword(user.getPassword()));
+		userRepository.save(user);
+	}
+	
+	public Boolean userExists(UserLogin user) {
+		UserLogin userDB = userRepository.findByUsername(user.getUsername());
+		if(userDB != null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public Boolean autentication(UserLogin user) throws NoSuchAlgorithmException {
+		UserLogin userDB = userRepository.findByUsername(user.getUsername());
+		if(userDB != null) {
+			if(userDB.getPassword().equals(encryptPassword(user.getPassword()))) {
 				return true;
 			}else {
 				return false;
@@ -51,6 +65,4 @@ public class UsuarioService {
 	  
 	        return hexString.toString();  
 	    }  
-	
-	
 }

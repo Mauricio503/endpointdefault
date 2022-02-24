@@ -10,24 +10,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import tech.criasystem.authentication.JwtTokenUtil;
 import tech.criasystem.authentication.UserService;
+import tech.criasystem.dto.req.UserReqDTO;
 import tech.criasystem.dto.res.UserResDTO;
 import tech.criasystem.model.UserLogin;
 
 @RestController
-@RequestMapping("/api/login")
-public class LoginController {
+@RequestMapping("/api/user")
+public class UserController {
 	
 	@Autowired
-	private UserService usuarioService;
-	
-	@PostMapping
-    public ResponseEntity<UserResDTO> post(@Valid @RequestBody UserLogin user){
+	private UserService userService;
+
+	@PostMapping("/register")
+    public ResponseEntity<UserResDTO> register(@Valid @RequestBody UserReqDTO dto){
+		UserLogin user = dto.toModel(new UserLogin());
 		try{
-			if(usuarioService.autentication(user)){
-				String jwtToken = new JwtTokenUtil().generateToken(user);
-                return new ResponseEntity<UserResDTO>(new UserResDTO(new UserLogin("","",jwtToken)),HttpStatus.OK);
+			if(!userService.userExists(user)){
+				userService.save(user);
+                return new ResponseEntity<UserResDTO>(new UserResDTO(new UserLogin("","","")),HttpStatus.OK);
 	            }
 	            else
 	                return new ResponseEntity<UserResDTO>(HttpStatus.UNAUTHORIZED);

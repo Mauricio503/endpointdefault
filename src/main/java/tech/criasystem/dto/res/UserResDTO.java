@@ -2,26 +2,26 @@ package tech.criasystem.dto.res;
 
 import java.io.Serializable;
 
-import tech.criasystem.model.Usuario;
+import tech.criasystem.model.UserLogin;
 
-public class UsuariotResDTO implements Serializable{
+public class UserResDTO implements Serializable{
 
 	
 	private static final long serialVersionUID = 1329653095132152345L;
 
 	private String name;
-	private String usuario;
+	private String username;
 	private String token;
 	
 	
-	public UsuariotResDTO() {
+	public UserResDTO() {
 	}
 
-	public UsuariotResDTO(Usuario usuario) {
+	public UserResDTO(UserLogin user) {
 		super();
-		this.name = usuario.getName();
-		this.usuario = usuario.getUsuario();
-		this.token = usuario.getToken();
+		this.name = user.getName();
+		this.username = user.getUsername();
+		this.token = user.getToken();
 	}
 
 	public String getName() {
@@ -32,12 +32,12 @@ public class UsuariotResDTO implements Serializable{
 		this.name = name;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getToken() {

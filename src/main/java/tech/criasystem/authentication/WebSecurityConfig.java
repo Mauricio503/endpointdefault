@@ -19,11 +19,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
 			.antMatchers(HttpMethod.GET,"/index").permitAll()
+			.antMatchers("/swagger-ui/**", "/javainuse-openapi/**", "/v3/api-docs/**").permitAll()
 			.antMatchers(HttpMethod.POST, "/api/login").permitAll()
+			.antMatchers(HttpMethod.POST, "/api/user/register").permitAll()
 			.anyRequest().authenticated()
 			.and();
 		
-		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }
