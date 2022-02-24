@@ -1,4 +1,4 @@
-<h1>Spring Boot JPA,Segurity + Autententicação JWT + SWAGGER</h1>
+<h1>Spring Boot JPA,Segurity + Autentication JWT + SWAGGER</h1>
 <p>
         Java: jdk 17.0.2
         
