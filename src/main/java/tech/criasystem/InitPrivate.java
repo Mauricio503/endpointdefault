@@ -1,4 +1,4 @@
-package tech.criasystem.controller;
+package tech.criasystem;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.security.PrivateKey;
 
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-public class InicializacaoSistema extends SpringBootServletInitializer {
+public class InitPrivate extends SpringBootServletInitializer {
 	
 	public static void contextInitialized() {
 		criarChavePrivadaAutenticacao();
