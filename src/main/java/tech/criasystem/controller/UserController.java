@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import tech.criasystem.authentication.UserService;
 import tech.criasystem.dto.req.UserReqDTO;
 import tech.criasystem.dto.res.UserResDTO;
 import tech.criasystem.model.UserLogin;
+import tech.criasystem.service.UserService;
 
 @RestController
 @RequestMapping("/api/user")
@@ -35,6 +35,7 @@ public class UserController {
 	        }
 	        catch(Exception ex)
 	        {
+	        	ex.getStackTrace();
 	        	return new ResponseEntity<UserResDTO>(HttpStatus.BAD_REQUEST);
 	        } 
 	   }

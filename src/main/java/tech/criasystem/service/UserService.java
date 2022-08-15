@@ -1,4 +1,4 @@
-package tech.criasystem.authentication;
+package tech.criasystem.service;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +16,7 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
 	
 	public void save(UserLogin user) throws NoSuchAlgorithmException {
 		user.setPassword(encryptPassword(user.getPassword()));

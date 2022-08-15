@@ -1,8 +1,12 @@
 package tech.criasystem.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import tech.criasystem.model.UserLogin;
 
-public interface UserRepository extends BaseRepository<UserLogin, Long> {
+@Repository
+public interface UserRepository extends JpaRepository<UserLogin, Long> {
 
 	UserLogin findByUsername(String username);
 }
