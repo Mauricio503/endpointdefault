@@ -3,10 +3,11 @@ package tech.criasystem.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import tech.criasystem.model.MasterTenant;
+import tech.criasystem.model.Tenant;
+
 
 @Repository
-public interface MasterTenantRepository extends JpaRepository<MasterTenant, Integer> {
+public interface TenantRepository extends JpaRepository<Tenant, Integer> {
     
-	MasterTenant findById(Long clientId);
+	Tenant findById(Long clientId);
 }

@@ -30,6 +30,27 @@ endpointdefault:
      poolName: public
 server.port: 8080
 
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/endpointdefault
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  main:
+    allow-circular-references: true
+  jpa: 
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    open-in-view: true
+    hibernate.ddl-auto: update
+#    hibernate.ddl-auto: create-drop
+    properties: 
+      hibernate.format_sql: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+  main.lazy-initialization: true
+
 springdoc.swagger-ui.path: /swagger-ui
 springdoc.swagger-ui.disable-swagger-default-url: true
 spring.main.allow-bean-definition-overriding: true

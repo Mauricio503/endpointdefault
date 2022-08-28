@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.Claims;
-import tech.criasystem.config.DBContextHolder;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter{
@@ -53,7 +52,7 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 							.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 					String claim = jwtTokenUtil.getClaimFromToken(jwtToken, Claims::getSubject);
-					DBContextHolder.setCurrentSchema(claim);
+					//UserLoginLogadoUtils.setCurrentSchema(claim);
 				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

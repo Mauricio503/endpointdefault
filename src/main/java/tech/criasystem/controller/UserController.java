@@ -28,7 +28,7 @@ public class UserController {
 		try{
 			if(!userService.userExists(user)){
 				userService.save(user);
-                return new ResponseEntity<UserResDTO>(new UserResDTO(new UserLogin("","","")),HttpStatus.OK);
+                return new ResponseEntity<UserResDTO>(new UserResDTO(),HttpStatus.OK);
 	            }
 	            else
 	                return new ResponseEntity<UserResDTO>(HttpStatus.UNAUTHORIZED);

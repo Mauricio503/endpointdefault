@@ -27,7 +27,7 @@ public class LoginController {
 		try{
 			if(usuarioService.autentication(user)){
 				String jwtToken = new JwtTokenUtil().generateToken(user);
-                return new ResponseEntity<UserResDTO>(new UserResDTO(new UserLogin("","",jwtToken)),HttpStatus.OK);
+                return new ResponseEntity<UserResDTO>(new UserResDTO(),HttpStatus.OK);
 	            }
 	            else
 	                return new ResponseEntity<UserResDTO>(HttpStatus.UNAUTHORIZED);

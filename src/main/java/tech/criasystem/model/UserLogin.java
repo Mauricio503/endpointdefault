@@ -1,11 +1,13 @@
 package tech.criasystem.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,29 +19,30 @@ public class UserLogin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column
 	private String name;
+	@Column
 	private String username;
+	@Column
 	private String password;
 	@Transient
 	private String token;
 	
+	@OneToOne
+	private Tenant tenant;
+	
 	public UserLogin() {
 		super();
 	}
-	
-	public UserLogin(Long id, String name, String username, String password) {
+
+	public UserLogin(Long id, String name, String username, String password, String token, Tenant tenant) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.username = username;
 		this.password = password;
-	}
-	
-	public UserLogin(String name, String username, String token) {
-		super();
-		this.name = name;
-		this.username = username;
 		this.token = token;
+		this.tenant = tenant;
 	}
 
 	public Long getId() {
@@ -80,6 +83,14 @@ public class UserLogin {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public Tenant getTenant() {
+		return tenant;
+	}
+
+	public void setTenant(Tenant tenant) {
+		this.tenant = tenant;
 	}
 	
 }
