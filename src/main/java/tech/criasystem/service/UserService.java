@@ -32,16 +32,16 @@ public class UserService {
 		}
 	}
 	
-	public Boolean autentication(UserLogin user) throws NoSuchAlgorithmException {
+	public UserLogin autentication(UserLogin user) throws NoSuchAlgorithmException {
 		UserLogin userDB = userRepository.findByUsername(user.getUsername());
 		if(userDB != null) {
 			if(userDB.getPassword().equals(encryptPassword(user.getPassword()))) {
-				return true;
+				return userDB;
 			}else {
-				return false;
+				return userDB;
 			}
 		}else {
-			return false;
+			return userDB;
 		}
 	}
 	

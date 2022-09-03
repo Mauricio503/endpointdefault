@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -29,20 +28,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 @EnableJpaRepositories(basePackages = { "tech.criasystem.repository"})
-@PropertySource("classpath:datasource.properties")
-//@ImportResource(value = "classpath:applicationContext-security.xml")
 public class ApplicationContextConfig {
+	
 	@Autowired
 	private Environment environment;
 	
-	@Bean
+	@Bean(name = "dataSource")
     public DataSource dataSource() throws NamingException {
 		return DataSourceBuilder
 		        .create()
-		        .username("postgres")
-		        .password("postgres")
-		        .url("jdbc:postgresql://localhost:5434/endpointdefault")
-		        .driverClassName("org.postgresql.Driver")
+		        .username(environment.getProperty("endpointdefault.datasource.username"))
+		        .password(environment.getProperty("endpointdefault.datasource.password"))
+		        .url(environment.getProperty("endpointdefault.datasource.url"))
+		        .driverClassName(environment.getProperty("endpointdefault.datasource.driverClassName"))
 		        .build();
     }
 	
@@ -81,7 +79,7 @@ public class ApplicationContextConfig {
 		jpaTransactionManager.setJpaDialect(jpaDialect());
 		return jpaTransactionManager;
 	}
-
+	
 	@Bean
 	public JpaDialect jpaDialect() {
 		JpaDialect jpaDialect = new HibernateJpaDialect();
@@ -92,7 +90,6 @@ public class ApplicationContextConfig {
 	@Bean
 	public JpaVendorAdapter jpaVendorAdapter() {
 		JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-
 		return jpaVendorAdapter;
 	}
 

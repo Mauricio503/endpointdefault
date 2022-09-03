@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tech.criasystem.authentication.JwtTokenUtil;
 import tech.criasystem.dto.res.UserResDTO;
+import tech.criasystem.model.Tenant;
 import tech.criasystem.model.UserLogin;
+import tech.criasystem.service.SchemaDDLService;
 import tech.criasystem.service.UserService;
 
 @RestController
@@ -25,9 +28,11 @@ public class LoginController {
 	@PostMapping
     public ResponseEntity<UserResDTO> post(@Valid @RequestBody UserLogin user){
 		try{
-			if(usuarioService.autentication(user)){
-				String jwtToken = new JwtTokenUtil().generateToken(user);
-                return new ResponseEntity<UserResDTO>(new UserResDTO(),HttpStatus.OK);
+			UserLogin userLogin = usuarioService.autentication(user);
+			if(userLogin != null){
+				String jwtToken = new JwtTokenUtil().generateToken(userLogin);
+				userLogin.setToken(jwtToken);
+                return new ResponseEntity<UserResDTO>(new UserResDTO(userLogin),HttpStatus.OK);
 	            }
 	            else
 	                return new ResponseEntity<UserResDTO>(HttpStatus.UNAUTHORIZED);

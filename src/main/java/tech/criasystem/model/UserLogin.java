@@ -27,7 +27,7 @@ public class UserLogin {
 	private String password;
 	@Transient
 	private String token;
-	
+	@Column(nullable = false)
 	@OneToOne
 	private Tenant tenant;
 	
@@ -92,5 +92,5 @@ public class UserLogin {
 	public void setTenant(Tenant tenant) {
 		this.tenant = tenant;
 	}
-	
+
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.Claims;
+import tech.criasystem.multitenancy.UserLoginMultitenancy;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter{
@@ -36,23 +37,31 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				e.getStackTrace();
 			}
 		} else {
 			logger.warn("JWT Token does not begin with Bearer String");
 		}
-
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			try {
 				if (jwtTokenUtil.validateToken(jwtToken)) {
-					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = 
-							new UsernamePasswordAuthenticationToken(username,
-							null, Collections.emptyList());
-					usernamePasswordAuthenticationToken
-							.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-					String claim = jwtTokenUtil.getClaimFromToken(jwtToken, Claims::getSubject);
-					//UserLoginLogadoUtils.setCurrentSchema(claim);
+					String schema = jwtTokenUtil.getSchemaFromToken(jwtToken);
+					if(schema != null) {
+						UserLoginMultitenancy userTenant = new UserLoginMultitenancy() {
+							
+							@Override
+							public String getSchema() {
+								return schema;
+							}
+						};
+						
+						UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = 
+								new UsernamePasswordAuthenticationToken(userTenant,
+								null, Collections.emptyList());
+						usernamePasswordAuthenticationToken
+								.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+						SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+					}
 				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());

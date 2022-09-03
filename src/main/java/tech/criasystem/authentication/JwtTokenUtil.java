@@ -56,6 +56,12 @@ public class JwtTokenUtil implements Serializable {
 	public Date getExpirationDateFromToken(String token) throws SignatureException, ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
 		return getClaimFromToken(token, Claims::getExpiration);
 	}
+	
+	public String getSchemaFromToken(String token) throws SignatureException, ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+		Claims claims = getAllClaimsFromToken(token);
+		return claims.get("schema",String.class);
+	}
+	
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) throws SignatureException, ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
 		final Claims claims = getAllClaimsFromToken(token);
@@ -81,6 +87,7 @@ public class JwtTokenUtil implements Serializable {
 			Map<String, Object> claims = new HashMap<>();
 			claims.put("userId", user.getId());
 			claims.put("userName", user.getUsername());
+			claims.put("schema", user.getTenant().getSchema());
 			String jwtToken = Jwts.builder()
 	            	.setClaims(claims)
 	                .setSubject(user.getUsername())

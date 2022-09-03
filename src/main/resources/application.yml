@@ -23,6 +23,7 @@ endpointdefault:
      username: postgres
      password: postgres
      driverClassName: org.postgresql.Driver
+     dialect: org.hibernate.dialect.PostgreSQLDialect
      connectionTimeout: 20000
      maxPoolSize: 250
      idleTimeout: 300000
