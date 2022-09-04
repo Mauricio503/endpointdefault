@@ -7,6 +7,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -27,8 +28,8 @@ public class UserLogin {
 	private String password;
 	@Transient
 	private String token;
-	@Column(nullable = false)
 	@OneToOne
+	@JoinColumn(nullable = false)
 	private Tenant tenant;
 	
 	public UserLogin() {

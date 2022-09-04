@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tech.criasystem.authentication.JwtTokenUtil;
 import tech.criasystem.dto.res.UserResDTO;
-import tech.criasystem.model.Tenant;
 import tech.criasystem.model.UserLogin;
-import tech.criasystem.service.SchemaDDLService;
 import tech.criasystem.service.UserService;
 
 @RestController

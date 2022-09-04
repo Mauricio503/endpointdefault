@@ -9,11 +9,10 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
 
 public class InitPrivate extends SpringBootServletInitializer {
+	
 	
 	public static void contextInitialized() {
 		criarChavePrivadaAutenticacao();

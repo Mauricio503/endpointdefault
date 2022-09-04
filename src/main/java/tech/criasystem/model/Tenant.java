@@ -1,7 +1,6 @@
 package tech.criasystem.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
