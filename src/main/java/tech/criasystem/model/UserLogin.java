@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class UserLogin {
+public class UserLogin{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

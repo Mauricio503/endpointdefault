@@ -54,7 +54,7 @@ public class SchemaDDLService {
 	@Autowired
 	private DataSource dataSource;
 
-	public void createSchema(Tenant entidade) throws SQLException {
+	public Boolean createSchema(Tenant entidade) throws SQLException {
 		Connection connection = dataSource.getConnection();
 		Statement stmt = connection.createStatement();
 		try {
@@ -65,6 +65,8 @@ public class SchemaDDLService {
 				LOGGER.info("Creating schema " + schema);
 				stmt.execute(String.format(templateCreateSchema, schema));
 				LOGGER.info("Schema " + schema + " created.");
+			}else {
+				return !existeSchema;
 			}
 			updateSchema(entidade);
 			boolean tablesCreated = containsTablesInSchema(schema, connection);
@@ -77,10 +79,12 @@ public class SchemaDDLService {
 			}
 			try {
 				connection.close();
+				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		return null;
 	}
 
 	public void updateSchema(Tenant entidade) {
@@ -120,7 +124,7 @@ public class SchemaDDLService {
 		return metadata;
 	}
 
-	public void deleteSchema(Tenant entidade) throws SQLException {
+	public Boolean deleteSchema(Tenant entidade) throws SQLException {
 		final String schema = entidade.getSchema();
 		Connection connection = dataSource.getConnection();
 		try {
@@ -132,11 +136,16 @@ public class SchemaDDLService {
 					stmt.execute(String.format(templateDeleteSchema, schema));
 				}
 				LOGGER.info("Schema " + schema + " excluido.");
+				return existeSchema;
+			}else {
+				return !existeSchema;
 			}
-		} finally {
+		} catch (SQLException e) {
 			connection.close();
+			e.printStackTrace();
 		}
-
+		connection.close();
+		return true;
 	}
 	public boolean isSchemaPresent(String schemaName, Connection connection) throws SQLException {
 		try(ResultSet resultSet = connection.prepareStatement(templateSelectSchemas).executeQuery()){

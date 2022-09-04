@@ -4,11 +4,15 @@ import javax.persistence.*;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import tech.criasystem.DTOToModel;
+
 import java.io.Serializable;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Tenant implements Serializable {
+public class Tenant extends DTOToModel implements Serializable {
+
+	private static final long serialVersionUID = -8779513307461561204L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
